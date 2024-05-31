@@ -1,7 +1,12 @@
 var grabbedCard = null;
 
+var grabbedX = 0;
+var grabbedY = 0;
+
 function drop_card() {
   grabbedCard.classList.remove("grabbed");
+  console.log(grabbedCard.getBoundingClientRect());
+
   grabbedCard = null;
   document.removeEventListener("mouseup", drop_card);
 }
@@ -9,25 +14,42 @@ function drop_card() {
 function grab_card(evt, elem) {
   grabbedCard = elem;
   console.log(evt);
+  console.log(elem.getBoundingClientRect());
+  var elemCurrentRectX = elem.getBoundingClientRect().left;
+  var elemCurrentRectY = elem.getBoundingClientRect().top;
+
+  var placementOfMouseX = evt.clientX - elemCurrentRectX;
+  var placementOfMouseY = evt.clientY - elemCurrentRectY;
+  grabbedX = placementOfMouseX;
+  grabbedY = placementOfMouseY;
+
+  console.log("x: ", placementOfMouseX, " y: ", placementOfMouseY);
   grabbedCard.classList.add("grabbed");
   document.addEventListener("mouseup", drop_card);
-  if (grabbedCard.dataset.initialClickLocationX) {
-    /*console.log("evt clientX is " + evt.clientX);
+  //if (grabbedCard.dataset.initialClickLocationX) {
+  /*console.log("evt clientX is " + evt.clientX);
     console.log("initialClickLocation is " + grabbedCard.dataset.initialClickLocationX);
 
     grabbedCard.dataset.initialClickLocationX += Number(evt.clientX - grabbedCard.dataset.initialClickLocationX);*/
-    return;
+
+  //return;
+  //}
+  if (!grabbedCard.dataset.initialClickLocationX) {
+    grabbedCard.dataset.initialClickLocationX = elemCurrentRectX;
+    grabbedCard.dataset.initialClickLocationY = elemCurrentRectY;
   }
-  grabbedCard.dataset.initialClickLocationX = evt.clientX;
-  grabbedCard.dataset.initialClickLocationY = evt.clientY;
+  grabbedCard.dataset.offsetX =
+    grabbedCard.dataset.initialClickLocationX - placementOfMouseX;
+  grabbedCard.dataset.offsetY =
+    grabbedCard.dataset.initialClickLocationY - placementOfMouseY;
 }
 
 function mouse_move(event) {
   if (grabbedCard) {
     const translateX =
-      event.clientX - grabbedCard.dataset.initialClickLocationX;
+      event.clientX - grabbedCard.dataset.initialClickLocationX - grabbedX;
     const translateY =
-      event.clientY - grabbedCard.dataset.initialClickLocationY;
+      event.clientY - grabbedCard.dataset.initialClickLocationY - grabbedY;
 
     let str = translateX + "px " + translateY + "px";
     console.log(str);
