@@ -2,7 +2,7 @@
     "name": "masaban-board",
     "version": "0.0.1",
     "scripts": {
-        "build-css": "sass --watch /src/index.scss /public",
+        "build-css": "sass --watch /src/index.scss /public/index.css",
         "serve": "http-server -p 8000",
         "dev": "npm-run-all --parallel build-css serve"
     },
