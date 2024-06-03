@@ -11,6 +11,16 @@ function drop_card() {
   document.removeEventListener("mouseup", drop_card);
 }
 
+function save() {
+  var domContents = document.getElementById("body").innerHTML;
+  localStorage.setItem("contents", domContents);
+}
+
+function load() {
+  var localStorageContents = localStorage.getItem("contents");
+  document.getElementById("body").innerHTML = localStorageContents;
+}
+
 function grab_card(evt, elem) {
   grabbedCard = elem;
   console.log(evt);
@@ -55,6 +65,11 @@ function mouse_move(event) {
     console.log(str);
     grabbedCard.style.translate = str;
   }
+}
+
+let localStorageContents = localStorage.getItem("contents");
+if(localStorageContents !== "" && localStorageContents !== null) {
+  document.getElementById("body").innerHTML = localStorageContents;
 }
 
 document.querySelectorAll(".grid-item").forEach((elem) => {
