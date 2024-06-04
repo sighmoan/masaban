@@ -1,89 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 
 .grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-    column-gap: 1rem;
-    row-gap: 2rem;
-    padding-top: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-.grid-item__name::before {
-    content: "name:";
-    color: #404040;
-}
-
-.grid-item__phone::before {
-    content: "phone:";
-    color: #404040;
-}
-
-.grid-item::before {
-    position: absolute;
-}
-
-.grid-item__id {
-    border-top: 2px solid #404040;
-    border-left: 2px solid #404040;
-    border-right: 2px solid #404040;
-    transform: translate(0, -2em);
-    width: 20%;
-    background-color: #a6a6a6;
-    padding-left: 5px;
-    transition: rotate 0.2s scale 0.2s box-shadow 0.2s;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  column-gap: 1rem;
+  row-gap: 2rem;
+  padding-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .grid-item {
-    background-color: #a6a6a6;
-    border: 2px solid #404040;
-    padding: 0.5rem;
-    box-shadow: 10px 5px 5px #666666b6;
-    z-index: 1;
-    aspect-ratio: 1/1;
-}
-
-.grid-item > span {
-    display: block;
-}
-
-.grid-item__text {
-    background-color: #a6a6a6;
-    border: 0;
-    resize: none;
-    height:100%;
-    width:100%;
+  background-color: #a6a6a6;
+  border: 2px solid #404040;
+  padding: 0.5rem;
+  box-shadow: 10px 5px 5px #666666b6;
+  z-index: 1;
+  aspect-ratio: 1/1;
+  resize: none;
 }
 
 .grid-item__text:focus {
-    outline: 0;
-    background-color: #c3c3c3;
+  outline: 0;
+  background-color: #c3c3c3;
+  rotate: 0deg !important;
 }
 
 .grid-item:hover {
-    rotate: 2deg;
-    transition: rotate 0.2s;
-    z-index: 50000;
+  rotate: 2deg;
+  transition: rotate 0.2s;
+  z-index: 50000;
 }
 
 body {
-    background-color: #b8b4b4;
+  background-color: #b8b4b4;
 }
 
 .grid-item.grabbed {
-    scale: 1.05;
-    box-shadow: 15px 15px 5px #666666b6;
-    transition: scale 0.1s box-shadow 0.1s;
+  scale: 1.05;
+  box-shadow: 15px 15px 5px #666666b6;
+  transition: scale 0.1s box-shadow 0.1s;
 }
 
 * {
-    font-family: "Roboto Mono";
+  font-family: "Roboto Mono";
 }
 
-@media (max-width:500px) {
-    .grid-container {
-        grid-template-columns: auto;
-
-    }
+@media (max-width: 500px) {
+  .grid-container {
+    grid-template-columns: auto;
+  }
 }
