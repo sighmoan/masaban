@@ -26,14 +26,35 @@ function serializeCards() {
   return cardObjects;
 }
 
+function deserializeCards(data) {
+  return data.map((card) => {
+    var newElement = document.createElement("textarea");
+    newElement.classList.add("grid-item");
+    newElement.addEventListener("mousedown", function (event) {
+      grab_card(event, newElement);
+    });
+    newElement.style.translate = card.translate;
+    newElement.value = card.contents;
+    newElement.dataset = card.dataset;
+    console.log(newElement);
+    return newElement;
+  });
+}
+
 function save() {
   var jsonObjects = JSON.stringify(serializeCards());
-  localStorage.setItem("contents", btoa(jsonObjects));
+  localStorage.setItem("cards", btoa(jsonObjects));
 }
 
 function load() {
-  var localStorageContents = localStorage.getItem("contents");
-  document.getElementById("body").innerHTML = localStorageContents;
+  document.getElementById("grid-container").innerHTML = "";
+
+  var localStorageContents = atob(localStorage.getItem("cards"));
+  const newElements = deserializeCards(JSON.parse(localStorageContents));
+  console.log("new elements being ", newElements);
+  for (const element of newElements) {
+    document.getElementById("grid-container").appendChild(element);
+  }
 }
 
 function grab_card(evt, elem) {
@@ -82,11 +103,6 @@ function mouse_move(event) {
   }
 }
 
-let localStorageContents = localStorage.getItem("contents");
-if (localStorageContents !== "" && localStorageContents !== null) {
-  document.getElementById("body").innerHTML = localStorageContents;
-}
-
 document.querySelectorAll(".grid-item").forEach((elem) => {
   elem.addEventListener("mousedown", function (event) {
     grab_card(event, elem);
@@ -96,4 +112,3 @@ document.querySelectorAll(".grid-item").forEach((elem) => {
 window.addEventListener("mousemove", mouse_move);
 
 window.grab_card = grab_card;
-console.log("hello");
