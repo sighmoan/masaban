@@ -41,10 +41,24 @@
     padding: 0.5rem;
     box-shadow: 10px 5px 5px #666666b6;
     z-index: 1;
+    aspect-ratio: 1/1;
 }
 
 .grid-item > span {
     display: block;
+}
+
+.grid-item__text {
+    background-color: #a6a6a6;
+    border: 0;
+    resize: none;
+    height:100%;
+    width:100%;
+}
+
+.grid-item__text:focus {
+    outline: 0;
+    background-color: #c3c3c3;
 }
 
 .grid-item:hover {
