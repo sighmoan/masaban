@@ -11,9 +11,24 @@ function drop_card() {
   document.removeEventListener("mouseup", drop_card);
 }
 
+function serializeCards() {
+  var cards = document.getElementsByClassName("grid-item");
+  const cardsArray = [...cards];
+  var cardObjects = cardsArray.map((card) => {
+    var newObj = {
+      contents: card.value,
+      dataset: card.dataset,
+      translate: card.style.translate,
+    };
+    return newObj;
+  });
+
+  return cardObjects;
+}
+
 function save() {
-  var domContents = document.getElementById("body").innerHTML;
-  localStorage.setItem("contents", domContents);
+  var jsonObjects = JSON.stringify(serializeCards());
+  localStorage.setItem("contents", btoa(jsonObjects));
 }
 
 function load() {
@@ -68,7 +83,7 @@ function mouse_move(event) {
 }
 
 let localStorageContents = localStorage.getItem("contents");
-if(localStorageContents !== "" && localStorageContents !== null) {
+if (localStorageContents !== "" && localStorageContents !== null) {
   document.getElementById("body").innerHTML = localStorageContents;
 }
 
