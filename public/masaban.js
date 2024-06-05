@@ -1,3 +1,9 @@
+var CONFIG = {
+  host: "http://localhost",
+  port: "9001",
+  apiBaseUrl: "/api/v1",
+};
+
 var grabbedCard = null;
 
 var grabbedX = 0;
@@ -19,11 +25,12 @@ function serializeCards() {
       contents: card.value,
       dataset: card.dataset,
       translate: card.style.translate,
+      id: 1,
     };
     return newObj;
   });
 
-  return cardObjects;
+  return { cards: cardObjects };
 }
 
 function deserializeCards(data) {
@@ -36,7 +43,7 @@ function deserializeCards(data) {
     newElement.style.translate = card.translate;
     newElement.value = card.contents;
 
-    if (card.dataset.offsetY) {
+    if (card.dataset) {
       newElement.dataset["initialClickLocationX"] =
         card.dataset.initialClickLocationX;
       newElement.dataset["initialClickLocationY"] =
@@ -52,18 +59,38 @@ function deserializeCards(data) {
 
 function save() {
   var jsonObjects = JSON.stringify(serializeCards());
-  localStorage.setItem("cards", btoa(jsonObjects));
+  fetch(CONFIG.host + ":" + CONFIG.port + CONFIG.apiBaseUrl + "/board/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: jsonObjects,
+  }).then(() => {
+    console.log("successfully saved to server");
+  });
 }
 
 function load() {
   document.getElementById("grid-container").innerHTML = "";
 
-  var localStorageContents = atob(localStorage.getItem("cards"));
-  const newElements = deserializeCards(JSON.parse(localStorageContents));
-  console.log("new elements being ", newElements);
-  for (const element of newElements) {
-    document.getElementById("grid-container").appendChild(element);
-  }
+  fetch(CONFIG.host + ":" + CONFIG.port + CONFIG.apiBaseUrl + "/board/")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("javascript is an ugly language");
+      }
+      console.log(response);
+      var jsonResponse = response.json();
+      console.log(jsonResponse);
+      return jsonResponse;
+    })
+    .then((data) => {
+      console.log(data);
+      const newElements = deserializeCards(data.cards);
+      console.log("new elements being ", newElements);
+      for (const element of newElements) {
+        document.getElementById("grid-container").appendChild(element);
+      }
+    });
 }
 
 function grab_card(evt, elem) {
@@ -81,14 +108,7 @@ function grab_card(evt, elem) {
   console.log("x: ", placementOfMouseX, " y: ", placementOfMouseY);
   grabbedCard.classList.add("grabbed");
   document.addEventListener("mouseup", drop_card);
-  //if (grabbedCard.dataset.initialClickLocationX) {
-  /*console.log("evt clientX is " + evt.clientX);
-    console.log("initialClickLocation is " + grabbedCard.dataset.initialClickLocationX);
 
-    grabbedCard.dataset.initialClickLocationX += Number(evt.clientX - grabbedCard.dataset.initialClickLocationX);*/
-
-  //return;
-  //}
   if (!grabbedCard.dataset.initialClickLocationX) {
     grabbedCard.dataset.initialClickLocationX = elemCurrentRectX;
     grabbedCard.dataset.initialClickLocationY = elemCurrentRectY;
