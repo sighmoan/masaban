@@ -35,7 +35,16 @@ function deserializeCards(data) {
     });
     newElement.style.translate = card.translate;
     newElement.value = card.contents;
-    newElement.dataset = card.dataset;
+
+    if (card.dataset.offsetY) {
+      newElement.dataset["initialClickLocationX"] =
+        card.dataset.initialClickLocationX;
+      newElement.dataset["initialClickLocationY"] =
+        card.dataset.initialClickLocationY;
+      newElement.dataset["offsetX"] = card.dataset.offsetX;
+      newElement.dataset["offsetY"] = card.dataset.offsetY;
+    }
+
     console.log(newElement);
     return newElement;
   });
