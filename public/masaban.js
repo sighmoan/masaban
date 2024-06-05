@@ -17,6 +17,15 @@ function drop_card() {
   document.removeEventListener("mouseup", drop_card);
 }
 
+function makeCard() {
+  var newElement = document.createElement("textarea");
+  newElement.classList.add("grid-item");
+  newElement.addEventListener("mousedown", function (event) {
+    grab_card(event, newElement);
+  });
+  document.getElementById("grid-container").appendChild(newElement);
+}
+
 function serializeCards() {
   var cards = document.getElementsByClassName("grid-item");
   const cardsArray = [...cards];
@@ -71,7 +80,11 @@ function save() {
 }
 
 function load() {
-  document.getElementById("grid-container").innerHTML = "";
+  var oldCards = document.getElementsByClassName(".grid-item");
+
+  while (oldCards.length > 0) {
+    document.removeChild(oldCards[0]);
+  }
 
   fetch(CONFIG.host + ":" + CONFIG.port + CONFIG.apiBaseUrl + "/board/")
     .then((response) => {
