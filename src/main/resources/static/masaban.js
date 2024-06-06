@@ -80,10 +80,9 @@ function save() {
 }
 
 function load() {
-  var oldCards = document.getElementsByClassName(".grid-item");
-
+  var oldCards = document.getElementsByClassName("grid-item");
   while (oldCards.length > 0) {
-    document.removeChild(oldCards[0]);
+      document.getElementById("grid-container").removeChild(oldCards[0]);
   }
 
   fetch(CONFIG.host + ":" + CONFIG.port + CONFIG.apiBaseUrl + "/board/")
