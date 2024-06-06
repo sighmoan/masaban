@@ -34,7 +34,7 @@ class MasabanControllerTest {
     void shouldRespondOk() throws Exception {
         // Arrange
         // Act
-        mockMvc.perform(get("/board/"))
+        mockMvc.perform(get("/api/v1/board/"))
                 .andExpect(status().isOk());
     }
 
