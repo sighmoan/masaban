@@ -5,3 +5,5 @@ public/index.css.map
 mvnw
 mvnw.cmd
 target
+target/
+*.class
