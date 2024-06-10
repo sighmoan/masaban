@@ -1,9 +1,2 @@
 node_modules
-public/index.css
-public/index.css.map
-.idea
-mvnw
-mvnw.cmd
-target
-target/
-*.class
+public
