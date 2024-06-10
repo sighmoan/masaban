@@ -4,7 +4,7 @@ import {
   updateCard,
   deleteCard,
   getColumnLabels,
-} from "../src/_apiService.js";
+} from "../src/_apiService.mjs";
 
 test("api service responds", () => {
   let response = newCard();
