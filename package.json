@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "build-css": "sass -w /src/:/public/",
+    "lint": "eslint",
     "serve": "http-server -p 8000",
     "build": "cp src/masaban.js public/masaban.js && cp src/index.html public/index.html",
     "dev": "npm run build && npm-run-all --parallel build-css serve"
@@ -16,6 +17,7 @@
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.3.0",
     "http-server": "^14.1.1",
+    "jest": "^29.7.0",
     "prettier": "^3.2.5",
     "sass": "^1.77.4"
   }

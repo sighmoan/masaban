@@ -5,4 +5,5 @@ import eslintConfigPrettier from "eslint-config-prettier";
 export default [
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
+  { ignores: ["test/"] },
 ];
